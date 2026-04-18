@@ -11,7 +11,7 @@ logging.basicConfig(
 
 app = FastAPI(
     title="Session Summary Fetch API",
-    description="Public API to fetch saved session summaries.",
+    description="Public API to fetch saved session summaries from the database.",
     version="1.0.0",
 )
 
@@ -23,3 +23,17 @@ app.add_middleware(
 )
 
 app.include_router(fetch.router, prefix="/api/v1")
+
+
+@app.get("/", tags=["Root"], summary="API info")
+def root():
+    return {
+        "name": "Session Summary Fetch API",
+        "version": "1.0.0",
+        "status": "running",
+        "author": "Chouhdry Rizwan",
+        "docs": "/docs",
+        "endpoints": {
+            "fetch_summary": "/api/v1/records/fetch?semester=...&book_name=...&session_number=...",
+        },
+    }
